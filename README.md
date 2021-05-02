@@ -5,3 +5,11 @@
 기획안
 
 https://www.notion.so/primi/87ee1eac62cd458088f552d8a5b3a9ec
+
+## git 및 github 사용법
+
+1. git clone 수행
+2. 자신 이름을 딴 branch 생성하고 이동하기 `git checkout -b dohyun` (이거 수행하면 생성한 후 자동으로 현재 branch 옮김)
+3. 파일 생성, git add, git commit 수행
+4. 본인 이름의 branch를 push `git push origin dohyun`
+5. github 웹페이지에서 merge 수행
