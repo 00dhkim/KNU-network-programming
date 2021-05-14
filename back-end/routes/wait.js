@@ -1,9 +1,9 @@
 // router
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 // middleware
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 
 router.use(bodyParser.urlencoded({ extended: false }));           
