@@ -63,34 +63,35 @@ router.route('/').post(
                 {
                     if (err) {
                         console.log('Error!!!');
-                        res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-                        res.write('<h1>에러발생</h1>');
-                        res.end();
+                        // res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+                        // res.write('<h1>에러발생</h1>');
+                        // res.end();
                         return;
                     }
      
                     if (rows) {
                         console.dir(rows);
                         json.result = true;
+                        json.name = rows[0].name;
                         
-                        res.writeHead(200, { "Content-Type": "json" });
-                        res.write('<h1>Login Success</h1>');
-                        res.write('<h1> user </h1>' + rows[0].name);
-                        res.write('<br><a href="/login"> re login </a>');
-                        res.end();
+                        // res.writeHead(200, { "Content-Type": "json" });
+                        // res.write('<h1>Login Success</h1>');
+                        // res.write('<h1> user </h1>' + rows[0].name);
+                        // res.write('<br><a href="/login"> re login </a>');
+                        // res.end();
                         
                     }
                     else {
                         console.log('empty Error!!!');
                         json.result = false;
                         
-                        res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-                        res.write('<h1>user data not exist</h1>');
-                        res.write('<a href="/login"> re login</a>');
-                        res.end();
+                        // res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+                        // res.write('<h1>user data not exist</h1>');
+                        // res.write('<a href="/login"> re login</a>');
+                        // res.end();
                         
                     }
-                    //res.json(json);
+                    res.json(json);
                 }
             );
         }

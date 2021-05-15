@@ -5,7 +5,7 @@ const port = 5000;
 
 // middleware
 var expressErrorHandler = require('express-error-handler');
-
+const cors = require('cors');
 
 // routes
 const gameRouter = require('./routes/game');
@@ -14,6 +14,7 @@ const loginRouter = require('./routes/login');
 const addUserRouter = require('./routes/addUser');
 
 // preprocessing
+app.use(cors());
 app.set('views', './views');
 app.set('view engine', 'ejs');
 

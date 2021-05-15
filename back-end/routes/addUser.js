@@ -57,36 +57,35 @@ router.route('/').post(
         var paramPW = req.body.passwords || req.query.passwords;
         var paramName = req.body.name || req.query.name;
         console.log('id: ' + paramID + ', paramPW: ' + paramPW + ', paramName: ' + paramName);
- 
+        
         addUser(paramID, paramName, paramPW,
             function (err, result) {
                 if (err) {
+                    json.result = false;
                     console.log('Error!!!');
                     console.log(err);
-                    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-                    res.write('<h1>에러발생 - 이미 존재하는  아이디일수 있음</h1>');
-                    res.write('<br><a href="/login"> re login </a>');
-                    res.end();
-                    return;
+                    // res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+                    // res.write('<h1>에러발생 - 이미 존재하는  아이디일수 있음</h1>');
+                    // res.write('<br><a href="/login"> re login </a>');
+                    // res.end();
                 }
- 
-                if (result)
+                else if (result)
                 {
                     console.dir(result);
                     json.result = true;
-                    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-                    res.write('<h1>Add Success</h1>');
-                    res.write('<br><a href="/login"> re login </a>');
-                    res.end();
+                    // res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+                    // res.write('<h1>Add Success</h1>');
+                    // res.write('<br><a href="/login"> re login </a>');
+                    // res.end();
                 }
                 else
                 {
                     json.result = false;
                     console.log('데이터베이스에 추가 에러');
-                    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
-                    res.write('<h1> Failed : add user</h1>');
-                    res.write('<a href="/login"> re login</a>');
-                    res.end();
+                    // res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+                    // res.write('<h1> Failed : add user</h1>');
+                    // res.write('<a href="/login"> re login</a>');
+                    // res.end();
                 }
                 res.json(json);
             }

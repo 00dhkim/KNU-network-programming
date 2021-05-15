@@ -21,27 +21,35 @@ function LoginForm(props) {
     }
     const handleSubmitClick = async(e) => {
         e.preventDefault();
-        const payload = await axios('/login', {
+        const payload = {
             "id" : state.id,
-            "password" : state.password,
+            "passwords" : state.password,
             "successMessage" : "Success"
-        });
-        axios.post('/login', payload)
+        };
+        
+        axios.post('http://localhost:5000/login', payload)
             .then(function (response){ 
-                if(response.status === 200){
+                if(response.data.result) {
+                    // 로그인 성공일 시
+                    
+                    console.log("login success")
+                    let name = response.data.name;
+                    console.log(name)
+
+                    // TODO: name 너가 적당히 띄워줘
+
+
                     setState(prevState => ({
                         ...prevState,
                         'successMessage' : 'Login successful. Redirecting to home page..'
                     }))
-                    localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
+                    localStorage.setItem(ACCESS_TOKEN_NAME,response.data.result);
                     redirectToHome();
                     props.showError(null)
-               }
-                else if(response.code === 204){
-                    props.showError("Username and password do not match");
-               }
-               else{
-               props.showError("Username does not exists");
+                }
+                else {
+                    // 로그인 실패일 시
+                    props.showError("login failed");
                 }
             })
             .catch(function (error) {
@@ -85,7 +93,7 @@ function LoginForm(props) {
                 <button 
                     type="submit" 
                     className="btn btn-primary"
-                    onClick={() => redirectToHome()}//{handleSubmitClick}
+                    onClick={handleSubmitClick}
                 >Submit</button>
             </form>
             <div className="alert alert-success mt-2" style={{display: state.successMessage ? 'block' : 'none' }} role="alert">

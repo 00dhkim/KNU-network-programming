@@ -23,16 +23,21 @@ function RegistrationForm(props) {
         if(state.name.length && state.password.length && state.id.length) {
             //props.showError(null);
             const payload={
-                "id":state.email,
-                "password":state.password,
+                "id":state.id,
+                "passwords":state.password,
                 "name" : state.name,
                 'successMessage' : 'Registration successful'
             }
             
+            console.log("회원가입 시도")
            // redirectToLogin(); //일단 회원가입 누르면 바로 로그인 화면으로 가게함
-            axios.post(API_BASE_URL+'/user/register', payload)
+            axios.post('http://localhost:5000/addUser', payload)
                 .then(function (response) {
-                    if(response.status === 200){
+                    console.dir(response)
+                    
+                    if(response.data.result) {
+                        // 회원가입 성공
+
                         setState(prevState => ({
                             ...prevState,
                             'successMessage' : 'Registration successful. Redirecting to home page..'
@@ -40,8 +45,12 @@ function RegistrationForm(props) {
                         localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token); //backend에서 받은 토큰을 브라우저의 로컬 저장소에 저장.
                         redirectToLogin();
                         props.showError(null)
-                    } else{
-                        props.showError("Some error ocurred");
+                    }
+                    else {
+                        // 회원가입 실패
+
+                        props.showError("fail to register");
+
                     }
                 })
                 .catch(function (error) {
@@ -115,7 +124,7 @@ function RegistrationForm(props) {
                 <button 
                     type="submit" 
                     className="btn btn-primary"
-                    onClick={() => redirectToLogin()}//{handleSubmitClick} //예비로
+                    onClick={handleSubmitClick} 
                 >
                     Register
                 </button>
