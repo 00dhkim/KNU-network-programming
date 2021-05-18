@@ -1,4 +1,4 @@
-# ai-server
+# ml-server
 
 - 모델 원본
   - https://github.com/shinsung3/AI_Tensorflow_NoHa/tree/master/yunki/0604
