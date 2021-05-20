@@ -13,3 +13,5 @@ https://www.notion.so/primi/87ee1eac62cd458088f552d8a5b3a9ec
 3. 파일 생성, git add, git commit 수행
 4. 본인 이름의 branch를 push `git push origin dohyun`
 5. github 웹페이지에서 merge 수행
+
+wstest 의 index.html 보시면 소켓 연결하시는 부분 바로 이해 가능하실 거에요 그 부분 보시고 게임쪽 프론트 짜는데 이용해주세요.
