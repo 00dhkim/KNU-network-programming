@@ -37,7 +37,7 @@ function LoginForm(props) {
                     console.log(name)
 
                     // TODO: name 너가 적당히 띄워줘
-
+                    alert(name);
 
                     setState(prevState => ({
                         ...prevState,

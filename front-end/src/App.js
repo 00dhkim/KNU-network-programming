@@ -31,9 +31,9 @@ function App() {
             <Route path="/register">
               <RegistrationForm showError={updateErrorMessage} updateTitle={updateTitle}/>
             </Route>
-            <Route path="/home">
+            <PrivateRoute path="/home">
               <Home/> 
-            </Route>
+            </PrivateRoute>
             <Route path="/game">
               <Game showError={updateErrorMessage} updateTitle={updateTitle}/>
             </Route>

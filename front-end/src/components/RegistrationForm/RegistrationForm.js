@@ -19,7 +19,7 @@ function RegistrationForm(props) {
             [id] : value
         }))
     }
-    const sendDetailsToServer = () => { //임의로 MongDB사용
+    const sendDetailsToServer = () => { 
         if(state.name.length && state.password.length && state.id.length) {
             //props.showError(null);
             const payload={

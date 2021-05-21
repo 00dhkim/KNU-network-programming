@@ -12,7 +12,7 @@ function Home(props) {
             
           })
         })
-/*
+
 // token 관련 테스트 코드
     useEffect(() => {
           axios.get("http://localhost:5000/wait", { headers: { 'token': localStorage.getItem(ACCESS_TOKEN_NAME) }})
@@ -22,18 +22,19 @@ function Home(props) {
               console.log("프라이빗 처리 성공")
             }
             else {
+              redirectToLogin()
               console.log("무언가 문제있음")
             }
 
               // if(response.status !== 200){
-              //   redirectToLogin()
+              //  
               // }
           })
           .catch(function (error) {
             redirectToLogin()
           });
         })
-        */
+        
     function redirectToLogin() {
     props.history.push('/login');
     //props.updateTitle('Login');
