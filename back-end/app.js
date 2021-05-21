@@ -2,16 +2,20 @@
 const express = require('express');
 const app = express();
 const port = 5000;
+let server;
 
 // middleware
 var expressErrorHandler = require('express-error-handler');
 const cors = require('cors');
+const path = require('path');
 
 // routes
-const gameRouter = require('./routes/game');
 const waitRouter = require('./routes/wait');
 const loginRouter = require('./routes/login');
 const addUserRouter = require('./routes/addUser');
+
+// socket
+const gameSocket = require('./routes/game');
 
 // preprocessing
 app.use(cors());
@@ -23,20 +27,29 @@ app.get('/', (req, res) => {
     res.redirect('/login');
 })
 
-app.use('/game', gameRouter);
+// game -> views/index.html
+app.get('/game', (req, res) => {
+    res.sendFile(path.resolve(__dirname + '/views/index.html'));
+});
+
+// Custom middleware
 app.use('/wait', waitRouter);
 app.use('/login', loginRouter);
 app.use('/addUser', addUserRouter);
 
 
-var errorHandler = expressErrorHandler(
-    { static: { '404': './public/404.html' } }              //404 에러 코드가 발생하면 해당 페이지를 보여주는 예외 미들웨어
-);
+// just some bug..........
+// var errorHandler = expressErrorHandler(
+//     { static: { '404': './public/404.html' } }              //404 에러 코드가 발생하면 해당 페이지를 보여주는 예외 미들웨어
+// );
  
-app.use(expressErrorHandler.httpError(404));
-app.use(expressErrorHandler);
+// app.use(expressErrorHandler.httpError(404));
+// app.use(expressErrorHandler);
 
-
-app.listen(port, () => {
+// listen
+server = app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
+
+// socket for processing game
+gameSocket(server);
