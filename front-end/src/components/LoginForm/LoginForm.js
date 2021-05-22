@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import './LoginForm.css';
-import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
+import { ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 
 function LoginForm(props) {
@@ -35,9 +35,7 @@ function LoginForm(props) {
                     console.log("login success")
                     let name = response.data.name;
                     console.log(name)
-
-                    // TODO: name 너가 적당히 띄워줘
-                    alert(name);
+                    alert(name+"님 반갑습니다.");
 
                     setState(prevState => ({
                         ...prevState,
@@ -49,6 +47,7 @@ function LoginForm(props) {
                 }
                 else {
                     // 로그인 실패일 시
+                    localStorage.setItem(ACCESS_TOKEN_NAME,response.data.result);
                     props.showError("login failed");
                 }
             })

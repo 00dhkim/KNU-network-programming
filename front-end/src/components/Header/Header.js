@@ -2,6 +2,8 @@ import React from 'react';
 import { withRouter } from "react-router-dom";
 import { ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
 import LoginForm from '../LoginForm/LoginForm';
+import axios from 'axios'
+
 function Header(props) {
     const capitalize = (s) => {
         if (typeof s !== 'string') return ''
@@ -20,8 +22,16 @@ function Header(props) {
             )
         }
     }
-    function handleLogout() {
+    function handleLogout() {//추가
         localStorage.removeItem(ACCESS_TOKEN_NAME)
+        axios.post('http://localhost:5000/wait',"exit")
+      .then(function(response){
+        console.dir(response)
+      })
+      .catch(function(error){
+        console.log(error);
+      });
+      
         props.history.push('/login')
         
     }
