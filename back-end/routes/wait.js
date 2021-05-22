@@ -21,6 +21,7 @@ router.route('/').post(
     (req, res) => {
         flag = req.body.flags;
 
+        json.isStart = false;
         if(flag === "exit") {
             json.strPeople.splice(json.strPeople.indexOf(req.body.name), 1);
             json.numPeople = json.numPeople - 1;
@@ -32,6 +33,8 @@ router.route('/').post(
         }
 
         if(json.numPeople === 3) {
+            json.numPeople = 0;
+            json.strPeople = [];
             json.isStart = true;
         }
 
