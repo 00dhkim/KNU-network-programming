@@ -19,20 +19,22 @@ let json = {
 //post
 router.route('/').post(
     (req, res) => {
-        flag = req.body.flags;
+        console.log(req.body);
+        console.dir(json);
+        flag = req.body.flag;
 
         json.isStart = false;
-        if(flag === "exit") {
+        if(flag == "exit") {
             json.strPeople.splice(json.strPeople.indexOf(req.body.name), 1);
             json.numPeople = json.numPeople - 1;
         }
 
-        if(flag === "access") {
+        if(flag == "access") {
             json.numPeople = json.numPeople + 1;
             json.strPeople.push(req.body.name);
         }
 
-        if(json.numPeople === 3) {
+        if(json.numPeople == 3) {
             json.numPeople = 0;
             json.strPeople = [];
             json.isStart = true;

@@ -16,6 +16,7 @@ function Home(props) {
       .then(function(response){
         console.dir(response)
         if(response.data.isStart ==true){
+          
           redirectToGame();
         }
       })
@@ -50,8 +51,9 @@ function Home(props) {
     function redirectToLogin() {
     props.history.push('/login');
     }
-    const redirectToGame = () => {
-      props.updateTitle('GAME')
+    function redirectToGame () {
+      console.log("Asff");
+      //props.updateTitle('GAME');
       props.history.push('/game'); 
   }
     return(
