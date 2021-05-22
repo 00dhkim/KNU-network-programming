@@ -1,4 +1,4 @@
-# ai-server
+# ml-server
 
 - 모델 원본
   - https://github.com/shinsung3/AI_Tensorflow_NoHa/tree/master/yunki/0604
@@ -9,4 +9,4 @@
 
 1. 28x28 크기의 이미지 파일 image.png 이름으로 업로드
 2. `PythonShell`로 predict.py 실행
-3. 출력값 서버에서 받기. stdout만 받으면 되고, stderr는 무시할 것.
+3. localhost:5000/ml 로 get 방식으로 접근.

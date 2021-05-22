@@ -12,6 +12,7 @@ const gameRouter = require('./routes/game');
 const waitRouter = require('./routes/wait');
 const loginRouter = require('./routes/login');
 const addUserRouter = require('./routes/addUser');
+const mlRouter = require('./routes/ml');
 
 // preprocessing
 app.use(cors());
@@ -27,6 +28,7 @@ app.use('/game', gameRouter);
 app.use('/wait', waitRouter);
 app.use('/login', loginRouter);
 app.use('/addUser', addUserRouter);
+app.use('/ml', mlRouter);
 
 
 var errorHandler = expressErrorHandler(
