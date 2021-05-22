@@ -40,15 +40,9 @@ router.route('/').post(
 )
 
 // get
-/*
+
 // token 관련 테스트 코드
-router.route('/').get(
-    (req, res) => {
-        
-        res.json({isPrivate: true});
-    }
-)
-*/
+
 
 
 

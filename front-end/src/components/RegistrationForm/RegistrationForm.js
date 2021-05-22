@@ -1,7 +1,7 @@
 import React, {useState} from 'react'; //useState : 상태변수 값이 react.js 에서 동적으로 업데이트 될 수 있는 변수
 import axios from 'axios';
 import './RegistrationForm.css';
-import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
+import {ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 
 function RegistrationForm(props) {
