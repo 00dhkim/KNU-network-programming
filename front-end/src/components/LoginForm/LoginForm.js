@@ -32,10 +32,15 @@ function LoginForm(props) {
                 if(response.data.result) {
                     // 로그인 성공일 시
                     
+                    var setCookie = function(name, value) {
+                        document.cookie = name + '=' + value + ';path=/';
+                    };
+
                     console.log("login success")
                     let name = response.data.name;
                     console.log(name)
                     alert(name+"님 반갑습니다.");
+                    setCookie("name", name);
 
                     setState(prevState => ({
                         ...prevState,
