@@ -30,8 +30,10 @@ router.route('/').post(
         }
 
         if(flag == "access") {
-            json.numPeople = json.numPeople + 1;
-            json.strPeople.push(req.body.name);
+            if(!json.strPeople.includes(req.body.name)) {       
+                json.numPeople = json.numPeople + 1;
+                json.strPeople.push(req.body.name);
+            }
         }
 
         if(json.numPeople == 3) {
