@@ -44,8 +44,6 @@ router
                     .push(req.body.name);
 
                 if (json.numPeople == 3) {
-                    complete.isStart = true;
-                    complete.numPeople = json.numPeople;
                     complete.strPeople = json.strPeople;
                     json.isStart = false;
                     json.numPeople = 0;
@@ -55,8 +53,8 @@ router
         }
 
         if(complete.strPeople.includes(req.body.name)) {
-            json.isStart = complete.isStart;
-            json.numPeople = complete.numPeople;
+            json.isStart = true;
+            json.numPeople = 3;
             json.strPeople = complete.strPeople;
         }
 
