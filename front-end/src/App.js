@@ -6,6 +6,7 @@ import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 import Home from './components/Home/Home';
 import PrivateRoute from './utils/PrivateRoute';
 import Game from './components/game/game';
+import UploadForm from './components/UploadForm/UploadForm'
 
 import {
   BrowserRouter as Router,
@@ -36,6 +37,9 @@ function App() {
             </PrivateRoute>
             <Route path="/game">
               <Game showError={updateErrorMessage} updateTitle={updateTitle}/>
+            </Route>
+            <Route path="/upload">
+              <UploadForm showError={updateErrorMessage} updateTitle={updateTitle}/>
             </Route>
           </Switch>
           <AlertComponent errorMessage={errorMessage} hideError={updateErrorMessage}/>
