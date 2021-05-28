@@ -13,7 +13,7 @@ model = keras.models.load_model('ml-server/CNN_model.h5')
 # model.summary()
 
 # 누스타 5 테스트
-test_num = plt.imread('ml-server/image.png')
+test_num = plt.imread('uploads/image.png')
 test_num = test_num[:,:,0]
 test_num = (test_num > 0.1) * test_num
 test_num = test_num.astype('float32')

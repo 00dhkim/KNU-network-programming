@@ -30,16 +30,20 @@ function LoginForm(props) {
             .then(function (response){ 
                 if(response.data.result) {
                     
+
                     // 로그인 성공일 시
                     var setCookie = function(name,value) {
                         document.cookie =name + '='+value+';path=/';
                         console.log(document.cookie)
                     };
+
                     console.log("login success")
                     let name = response.data.name;
                     alert(name+"님 반갑습니다.");
+
                     setCookie("name",name);
                     setCookie("userid",state.id);
+
                     setState(prevState => ({
                         ...prevState,
                         'successMessage' : 'Login successful. Redirecting to home page..',
