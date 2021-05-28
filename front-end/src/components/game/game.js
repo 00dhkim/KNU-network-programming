@@ -10,12 +10,12 @@ import io from "socket.io-client";
 const socket = io("http://localhost:5000/");
 const msg = document.cookie;
 const cookie = msg.split(" ");
-const style = {
-    paper : {
-        name :cookie[0].substring(5) ,
-        userid :cookie[1].substring(7) 
-    },
-};
+// const style = {
+    // paper : {
+        // name :cookie[0].substring(5) ,
+        // userid :cookie[1].substring(7) 
+    // },
+// };
 function game(){
     
 }
@@ -40,7 +40,7 @@ export default withRouter(game)
 //         ("form").submit(function(e) {
 //         e.preventDefault();
 //         var msgForm = ("#msgForm");
-//         socket.emit("chat", { msg: msgForm.val() });
+//         socket.emit("game", { msg: msgForm.val() });
 //         msgForm.val("");
 //         });
 //     }

@@ -1,10 +1,30 @@
 //socket
 const socketIO = require('socket.io');
+const crypto = require('crypto');
+
+const securekey = "key";
+
+//function
+const cipher = (value, key) => {
+    const encrypt = crypto.createCipher('des', key);
+    const encryptResult = encrypt.update(password, 'utf8', 'base64') + encrypt.final('base64');
+    console.log(encryptResult);
+    return encryptResult;
+}
+
+const decipher = (value, key) => {
+	const decode = crypto.createDecipher('des', key);
+	const decodeResult = decode.update(password, 'base64', 'utf8')
+		+ decode.final('utf8')
+	console.log(decodeResult)
+    return decodeResult;
+}
+
 
 //process start
 module.exports = (server) => {
     console.log("check");
-    const io = socketIO(server);
+    const io = socketIO(server, {cors: {origin:"*"}});
 
     // variable
     let packet = {
