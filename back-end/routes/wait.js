@@ -44,10 +44,10 @@ router
                     .push(req.body.name);
 
                 if (json.numPeople == 3) {
+                    json.isStart = true;
                     complete = json;
                     json.numPeople = 0;
                     json.strPeople = [];
-                    json.isStart = true;
                 }
             }
         }
