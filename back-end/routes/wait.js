@@ -44,7 +44,10 @@ router
                     .push(req.body.name);
 
                 if (json.numPeople == 3) {
-                    complete.strPeople = json.strPeople;
+                    json.isStart = true;
+                    
+                    complete = JSON.parse(JSON.stringify(json));
+
                     json.isStart = false;
                     json.numPeople = 0;
                     json.strPeople = [];
@@ -53,12 +56,11 @@ router
         }
 
         if(complete.strPeople.includes(req.body.name)) {
-            json.isStart = true;
-            json.numPeople = 3;
-            json.strPeople = complete.strPeople;
+            res.json(complete);
         }
-
-        res.json(json);
+        else{
+            res.json(json);
+        }
     })
 
 // get token 관련 테스트 코드 export
