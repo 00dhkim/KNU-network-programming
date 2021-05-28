@@ -74,6 +74,10 @@ module.exports = (server) => {
     // socket
     io.on('connection', function (socket) {
 
+        //test
+        let d = new Date();
+        io.emit('FromAPI',d);
+
         // event : login (== access) (input data : name / userid)
         socket.on('login', function (data) {
             console.log(
