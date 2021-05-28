@@ -13,8 +13,8 @@ const msg = document.cookie;
 const cookie = msg.split(";");
 const style = {
     paper : {
-        name :cookie[0].substring(5) ,
-        userid :cookie[1].substring(7) 
+        // name :cookie[0].substring(5) ,
+        // userid :cookie[1].substring(7) 
     },
 };
 function game(){
