@@ -14,6 +14,7 @@ const waitRouter = require('./routes/wait');
 const loginRouter = require('./routes/login');
 const addUserRouter = require('./routes/addUser');
 const mlRouter = require('./routes/ml');
+const uploadRouter = require('./routes/upload');
 
 // socket
 const gameSocket = require('./routes/game');
@@ -38,6 +39,7 @@ app.use('/wait', waitRouter);
 app.use('/login', loginRouter);
 app.use('/addUser', addUserRouter);
 app.use('/ml', mlRouter);
+app.use('/upload', uploadRouter);
 
 
 // just some bug..........
