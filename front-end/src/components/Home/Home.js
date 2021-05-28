@@ -1,23 +1,24 @@
 import React,{ isValidElement, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { ACCESS_TOKEN_NAME, API_BASE_URL } from '../../constants/apiConstants';
+import { ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
 import axios from 'axios'
-//import { post } from '../../../../back-end/routes/wait';
-
+import {useState} from 'react';
+import Cookies from 'universal-cookie';
 
 function Home(props) {
   let payload = {
     flag : "",
     name : ""
   }
-
+    const [title, updateTitle] = useState(null);
     const sendToServer = () => { 
-      axios.post('http://localhost:5000/wait',payload) //이렇게 하면 되나 ??
+      axios.post('http://localhost:5000/wait',payload) 
       .then(function(response){
         console.dir(response)
+        payload.flag = "wait"
         if(response.data.isStart ==true){
-          
-          redirectToGame();
+          clearTimeout(sendToServer)
+         // redirectToGame();
         }
       })
       .catch(function(error){
@@ -28,11 +29,14 @@ function Home(props) {
     useEffect(() => {
           axios.post("http://localhost:5000/wait", { headers: { 'token': localStorage.getItem(ACCESS_TOKEN_NAME) }})
           .then(function (response) {
-            
             if(response.status == 200) {
+              props.updateTitle('Home')
               console.log("프라이빗 처리 성공")
               console.log(response)
               payload.flag = "access"
+              const msg = document.cookie;
+              const name = msg.split(" ");
+              payload.name = name[0].substring(5)
               sendToServer()
             }
             else {
@@ -47,13 +51,13 @@ function Home(props) {
           });
           
         })
-    //setTimeout(useEffect,10000);    
+  setInterval(sendToServer,100000);    
     function redirectToLogin() {
-    props.history.push('/login');
+      props.updateTitle('Login')
+      props.history.push('/login');
     }
     function redirectToGame () {
-      console.log("Asff");
-      //props.updateTitle('GAME');
+      props.updateTitle('GAME');
       props.history.push('/game'); 
   }
     return(
