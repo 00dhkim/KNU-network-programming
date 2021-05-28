@@ -13,6 +13,11 @@ import {
 } from "react-router-dom";
 import AlertComponent from './components/AlertComponent/AlertComponent';  
 function App() {
+  var setCookie = function(name,value,userid,value2) {
+    document.cookie =name + '='+value+' '+userid+ '=' + value2+';path=/';
+    console.log(document.cookie)
+  };
+  setCookie("name","null","userid","null");
   const [title, updateTitle] = useState(null);
   const [errorMessage, updateErrorMessage] = useState(null);
   return (
