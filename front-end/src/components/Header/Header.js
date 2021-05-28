@@ -5,6 +5,10 @@ import LoginForm from '../LoginForm/LoginForm';
 import axios from 'axios'
 
 function Header(props) {
+    let payload = {
+        flag : "",
+        name : ""
+      }
     const capitalize = (s) => {
         if (typeof s !== 'string') return ''
         return s.charAt(0).toUpperCase() + s.slice(1)
@@ -22,17 +26,29 @@ function Header(props) {
             )
         }
     }
-    function handleLogout() {//추가
-        localStorage.removeItem(ACCESS_TOKEN_NAME)
-        axios.post('http://localhost:5000/wait',"exit")
-      .then(function(response){
-        console.dir(response)
-      })
-      .catch(function(error){
-        console.log(error);
-      });
-      
+    const sendToServer = () => { 
+        axios.post('http://localhost:5000/wait',payload)
+        .then(function(response){
+          console.dir(response)
+          console.dir(response.data.name)
+        })
+        .catch(function(error){
+          console.log(error);
+        });
+        console.log(payload)
         props.history.push('/login')
+      }
+    function handleLogout() {
+      console.log(localStorage)
+        localStorage.removeItem(ACCESS_TOKEN_NAME)
+        clearTimeout(sendToServer)
+      var setCookie = function(name,value,userid,value2) {
+        document.cookie =name + '='+value+' '+userid+ '=' + value2+';path=/'+';maxAge=0 ';
+        console.log(document.cookie)
+    };
+      setCookie("name"," ","userid"," ");
+     payload.flag = "exit"
+      sendToServer()
         
     }
     return(

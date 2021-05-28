@@ -14,6 +14,11 @@ import {
   Route
 } from "react-router-dom";
 import AlertComponent from './components/AlertComponent/AlertComponent';  
+// var setCookie = function(name,value) {
+//   document.cookie =name + '='+value+';path=/';
+// };
+// setCookie("name","null");
+// setCookie("userid","null");
 function App() {
   const [title, updateTitle] = useState(null);
   const [errorMessage, updateErrorMessage] = useState(null);
@@ -24,16 +29,16 @@ function App() {
         <div className="container d-flex align-items-center flex-column">
           <Switch>
             <Route path="/" exact={true}>
-              <LoginForm showError={updateErrorMessage} updateTitle={updateTitle}/>
+              <LoginForm showError={updateErrorMessage} updateTitle={updateTitle} />
             </Route>
             <Route path="/login">
-              <LoginForm showError={updateErrorMessage} updateTitle={updateTitle}/>
+              <LoginForm showError={updateErrorMessage} updateTitle={updateTitle} />
             </Route>
             <Route path="/register">
-              <RegistrationForm showError={updateErrorMessage} updateTitle={updateTitle}/>
+              <RegistrationForm showError={updateErrorMessage} updateTitle={updateTitle} />
             </Route>
-            <PrivateRoute path="/home">
-              <Home/> 
+            <PrivateRoute path="/home" >
+              <Home updateTitle={updateTitle}/> 
             </PrivateRoute>
             <Route path="/game">
               <Game showError={updateErrorMessage} updateTitle={updateTitle}/>
@@ -46,6 +51,7 @@ function App() {
         </div>
     </div>
     </Router>
+    
   );
 }
 

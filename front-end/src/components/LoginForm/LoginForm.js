@@ -3,7 +3,7 @@ import axios from 'axios';
 import './LoginForm.css';
 import { ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 import { withRouter } from "react-router-dom";
-
+//name=holy userid=111;
 function LoginForm(props) {
     const [state , setState] = useState({
         id : "",
@@ -19,32 +19,34 @@ function LoginForm(props) {
 
         }))
     }
-    const handleSubmitClick = async(e) => {
+    const handleSubmitClick =(e) => {
         e.preventDefault();
         const payload = {
             "id" : state.id,
             "passwords" : state.password,
             "successMessage" : "Success"
         };
-        
         axios.post('http://localhost:5000/login', payload)
             .then(function (response){ 
                 if(response.data.result) {
-                    // 로그인 성공일 시
                     
-                    var setCookie = function(name, value) {
-                        document.cookie = name + '=' + value + ';path=/';
+
+                    // 로그인 성공일 시
+                    var setCookie = function(name,value) {
+                        document.cookie =name + '='+value+';path=/';
+                        console.log(document.cookie)
                     };
 
                     console.log("login success")
                     let name = response.data.name;
-                    console.log(name)
                     alert(name+"님 반갑습니다.");
-                    setCookie("name", name);
+
+                    setCookie("name",name);
+                    setCookie("userid",state.id);
 
                     setState(prevState => ({
                         ...prevState,
-                        'successMessage' : 'Login successful. Redirecting to home page..'
+                        'successMessage' : 'Login successful. Redirecting to home page..',
                     }))
                     localStorage.setItem(ACCESS_TOKEN_NAME,response.data.result);
                     redirectToHome();
@@ -61,7 +63,7 @@ function LoginForm(props) {
             });
     }
     const redirectToHome = () => {
-        props.updateTitle('Home')
+        //props.updateTitle('Home')
         props.history.push('/home');
     }
     const redirectToRegister = () => {
@@ -110,5 +112,4 @@ function LoginForm(props) {
         </div>
     )
 }
-
 export default withRouter(LoginForm);
