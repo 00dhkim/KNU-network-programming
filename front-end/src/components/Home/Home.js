@@ -17,8 +17,9 @@ function Home(props) {
         console.dir(response)
         payload.flag = "wait"
         if(response.data.isStart ==true){
-          //clearTimeout(sendToServer)
-         // redirectToGame();
+          console.log("letgo")
+          clearTimeout(sendToServer)
+          redirectToGame();
         }
       })
       .catch(function(error){
@@ -53,7 +54,7 @@ function Home(props) {
           });
           
         })
-  //setInterval(sendToServer,100000);    
+  setInterval(sendToServer,10000);    
     function redirectToLogin() {
       props.updateTitle('Login')
       props.history.push('/login');

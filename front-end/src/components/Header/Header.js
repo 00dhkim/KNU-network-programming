@@ -35,16 +35,13 @@ function Header(props) {
         .catch(function(error){
           console.log(error);
         });
+        console.log(payload)
         props.history.push('/login')
       }
     function handleLogout() {
+      console.log(localStorage)
         localStorage.removeItem(ACCESS_TOKEN_NAME)
-      .then(function(response){
-        console.dir(response)
-      })
-      .catch(function(error){
-        console.log(error);
-      });
+        clearTimeout(sendToServer)
       var setCookie = function(name,value,userid,value2) {
         document.cookie =name + '='+value+' '+userid+ '=' + value2+';path=/'+';maxAge=0 ';
         console.log(document.cookie)

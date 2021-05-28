@@ -9,15 +9,19 @@ import io from "socket.io-client";
 //src="/socket.io/socket.io.js"
 const socket = io("http://localhost:5000/");
 const msg = document.cookie;
-const cookie = msg.split(" ");
-// const style = {
-    // paper : {
-        // name :cookie[0].substring(5) ,
-        // userid :cookie[1].substring(7) 
-    // },
-// };
+const cookie = msg.split(";");
+const style = {
+    paper : {
+        name :cookie[0].substring(5) ,
+        userid :cookie[1].substring(7) 
+    },
+};
 function game(){
-    
+    return(
+        <div className="mt-2">
+          <span>game</span>
+        </div>
+    )
 }
 export default withRouter(game)
 // export default class game extends React.Component{
@@ -44,20 +48,7 @@ export default withRouter(game)
 //         msgForm.val("");
 //         });
 //     }
-//     render(){
-//         return(
-//             <div className = "container">
-//             <h3>Ending Game </h3>
-//             <form classNmae = "form-inline">
-//                 <div className = "form-group">
-//                     <level for = "msgForm"> Message : </level>
-//                     <input type = "text" className = "form-control" id = "msgForm"></input>
-//                 </div>
-//             <button type = "submit" className= "btn btn-primary" onClick = {this.handleSubmitClick} >Send</button>
-//             </form>
-//             <div id = "chatLogs"></div>
-//         </div>
-//         )
+//     
 //     }
     
 // }
