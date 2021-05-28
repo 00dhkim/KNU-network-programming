@@ -22,9 +22,7 @@ function UploadForm(props) {
         // 서버의 upload API 호출
         const res = await axios.post("http://localhost:5000/upload", formData);
         console.log(res);
-    }
 
-    const update = async () => {
         let ml_res = await axios.get("http://localhost:5000/ml");
         console.dir(ml_res.data);
         setNum(ml_res);
@@ -40,7 +38,7 @@ function UploadForm(props) {
                 <input type="file" onChange={onChange}/>
                 <button onClick={onClick}>제출</button>
             </div>
-            <button onClick={update}>가져오기</button>
+            {/* <button onClick={update}>가져오기</button> */}
             <textarea id='texterea'></textarea>
         </div>
     )
