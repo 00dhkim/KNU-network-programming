@@ -38,11 +38,6 @@ function Header(props) {
         props.history.push('/login')
       }
     function handleLogout() {
-      var setCookie = function(name,value,userid,value2) {
-        document.cookie =name + '='+value+' '+userid+ '=' + value2+';path=/'+';maxAge=0 ';
-        console.log(document.cookie)
-    };
-      console.log(localStorage)
         localStorage.removeItem(ACCESS_TOKEN_NAME)
       .then(function(response){
         console.dir(response)
@@ -50,10 +45,13 @@ function Header(props) {
       .catch(function(error){
         console.log(error);
       });
+      var setCookie = function(name,value,userid,value2) {
+        document.cookie =name + '='+value+' '+userid+ '=' + value2+';path=/'+';maxAge=0 ';
+        console.log(document.cookie)
+    };
       setCookie("name"," ","userid"," ");
      payload.flag = "exit"
       sendToServer()
-        
         
     }
     return(

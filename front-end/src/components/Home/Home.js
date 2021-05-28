@@ -17,7 +17,7 @@ function Home(props) {
         console.dir(response)
         payload.flag = "wait"
         if(response.data.isStart ==true){
-          clearTimeout(sendToServer)
+          //clearTimeout(sendToServer)
          // redirectToGame();
         }
       })
@@ -35,8 +35,10 @@ function Home(props) {
               console.log(response)
               payload.flag = "access"
               const msg = document.cookie;
-              const name = msg.split(" ");
+              const name = msg.split(";");
+              console.log(name)
               payload.name = name[0].substring(5)
+              console.log(payload.name)
               sendToServer()
             }
             else {
@@ -51,7 +53,7 @@ function Home(props) {
           });
           
         })
-  setInterval(sendToServer,100000);    
+  //setInterval(sendToServer,100000);    
     function redirectToLogin() {
       props.updateTitle('Login')
       props.history.push('/login');
