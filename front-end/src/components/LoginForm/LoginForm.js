@@ -70,6 +70,10 @@ function LoginForm(props) {
         props.history.push('/register'); 
         props.updateTitle('Register');
     }
+    const redirectToUpload = () => {
+        props.history.push('/upload');
+        props.updateTitle('Uploads');
+    }
     return(
         <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
             <form>
@@ -109,6 +113,15 @@ function LoginForm(props) {
                 <span>Dont have an account? </span>
                 <span className="loginText" onClick={() => redirectToRegister()}>Register</span> 
             </div>
+            <div>
+                <button
+                    type="submit"
+                    className="btn btn-primary"
+                    onClick={() => redirectToUpload()}>
+                        upload images
+                </button>
+                {/* <button className="btn btn-primary" onClick="location.href='http://localhost:3000/upload';">upload images</button> */}
+                </div>
         </div>
     )
 }
