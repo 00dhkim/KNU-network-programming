@@ -1,4 +1,3 @@
-
 import { withRouter } from 'react-router-dom';
 
 //emit : 데이터 줄때
@@ -35,29 +34,31 @@ function App() {
     const[message,setMessage]= useState(""); // 새로 추가된 메시지
     const[chatMonitor,setChatMonitor] = useState([]); //지금까지 모든 메시지
     const [state, setState] = useState({message:'', name:''})
-    let element;
+    var num =0;
     //console.log(msg);
 
-    useEffect(()=>{
+    socket.on("login",function(data){ //유저이름을 받음.
+        setUser(data);
+    });
+    
+   useEffect(()=>{
     socket.on("game", function(data) {//서버에서 보낸 메시지를 받음
-            console.log("data received");
-            console.dir(data); // good
+        console.log("data received");
+        console.dir(data); // good
+        if(data.res !=false){
             setMessage(data.msg);
             setName(data.from.name);
             console.dir(data.from.name);
-            // setChatMonitor([...chatMonitor, {name, message} ]);
-            setChatMonitor([...chatMonitor,
-                 {name, message}])
-            console.dir(chatMonitor);
-        })
+            setChatMonitor([...chatMonitor, {name, message} ]);
+        }
+        
     })
+   })
+    
 
     const onChange=(e) => {
-        console.dir(e.target);
         setInput(e.target.value);
-        // setState({...state, [e.target.name]: e.target.value})
-        setState({...state, message:e.target.value, name:payload.name})
-        console.dir(state)
+        setState({...state,[e.target.name]: e.target.value})
     }
 
     const onClick= (e)=>{ //내가 메시지를 서버로 보낼 떄
@@ -66,34 +67,30 @@ function App() {
         
         const{name,message}=state
         socket.emit("game",{msg:input})
-        // setMessage(e.target.value);
-        // name 넣기
-        // setChatMonitor([...chatMonitor],{name,message})
-        setChatMonitor( [...chatMonitor, {name, message}] );
+       // setChatMonitor( [...chatMonitor, {name, message}] );
         console.dir(name);
         console.dir(message);
-        console.dir(chatMonitor);
 
         // console.dir(msg);
         setInput("")
-        setState({message:'',name})
+        setState({message:'',name:''})
 
     }
-
-
-    socket.on("login",function(data){ //유저이름을 받음.
-        setUser(data);
-    });
+    useEffect(() => {
+        console.log('chatMoniter 변경됨');
+        console.dir(chatMonitor);
+      }, [chatMonitor]);
 
     const renderChat=()=> {
-         console.log("render")
-        // console.dir(chatMonitor)
-        return chatMonitor.map(({name, message},index)=>(
-            <div key={index}>
-            <h3>{name}:<span>{message}</span></h3>
-            </div>
-        ))
-    }
+        console.log("render")
+       // console.dir(chatMonitor)
+       return chatMonitor.map(({name, message},index)=>(
+           <div key={index}>
+           <h3>{name}:<span>{message}</span></h3>
+           </div>
+       ))
+   }
+   
   return(
         <div>
             <form onSubmit={onClick}>
@@ -143,4 +140,3 @@ function App() {
 }
 
 export default App;
-
