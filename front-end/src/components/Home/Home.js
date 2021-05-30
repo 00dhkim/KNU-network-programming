@@ -14,11 +14,12 @@ function Home(props) {
     const sendToServer = () => { 
       axios.post('http://localhost:5000/wait',payload) 
       .then(function(response){
-        console.dir(response)
+       // console.dir(response)
         payload.flag = "wait"
+        clearInterval(sendToServer)
         if(response.data.isStart ==true){
-          console.log("letgo")
-          clearTimeout(sendToServer)
+         // console.log("letgo")
+          clearInterval(sendToServer)
           redirectToGame();
         }
       })
@@ -33,13 +34,11 @@ function Home(props) {
             if(response.status == 200) {
               props.updateTitle('Home')
               console.log("프라이빗 처리 성공")
-              console.log(response)
               payload.flag = "access"
               const msg = document.cookie;
               const name = msg.split(";");
               console.log(name)
               payload.name = name[0].substring(5)
-              console.log(payload.name)
               sendToServer()
             }
             else {

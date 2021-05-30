@@ -1,4 +1,4 @@
-//socket
+
 const socketIO = require('socket.io');
 const crypto = require('crypto');
 
@@ -54,10 +54,12 @@ module.exports = (server) => {
 
         // check first word
         isStartWord(statement) {
-            if (statement.charAt(0) === this.startword) 
-                return true;
-            else 
-                return false;
+            if (statement.charAt(0) === this.startword)
+            return true;
+            else {
+                    console.log("False isStartWord(), state.chatAt(0) === "+statement.charAt(0)+"startword === "+this.startword);
+                    return false;
+                }
             }
         ,
 
@@ -73,6 +75,10 @@ module.exports = (server) => {
 
     // socket
     io.on('connection', function (socket) {
+
+        //test
+        let d = new Date();
+        io.emit('FromAPI',d);
 
         // event : login (== access) (input data : name / userid)
         socket.on('login', function (data) {
@@ -129,11 +135,13 @@ module.exports = (server) => {
             } else {
                 gameInfo.res = false;
                 if (gameInfo.isOrder(socket.name)) {
-                    gameInfo.res_message = "startword is wrong!";
+                    gameInfo.res_message = "startword is wrong!" + gameInfo.startword;
                 } else {
                     gameInfo.res_message = "you are not in order yet!";
                 }
             }
+
+            gameInfo.res_message += "order: "+gameInfo.participants;
 
             // config packet
             packet.from.name = socket.name;
@@ -143,6 +151,7 @@ module.exports = (server) => {
             // send
             if (gameInfo.res) {
                 packet.res = true;
+                packet.comment = gameInfo.res_message;
                 io.emit('game', packet);
             } else {
                 packet.res = false;
@@ -180,5 +189,3 @@ module.exports = (server) => {
         });
     });
 };
-
-//  export module.exports = router;
