@@ -58,7 +58,7 @@ function App() {
 
     const onChange=(e) => {
         setInput(e.target.value);
-        setState({...state,[e.target.name]: e.target.value})
+        setState({...state,[e.target.name]: e.target.value ,'name' :payload.name  })
     }
 
     const onClick= (e)=>{ //내가 메시지를 서버로 보낼 떄
