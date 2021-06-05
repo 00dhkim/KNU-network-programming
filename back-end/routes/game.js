@@ -1,4 +1,3 @@
-
 const socketIO = require('socket.io');
 const crypto = require('crypto');
 
@@ -7,24 +6,30 @@ const securekey = "key";
 //function
 const cipher = (value, key) => {
     const encrypt = crypto.createCipher('des', key);
-    const encryptResult = encrypt.update(password, 'utf8', 'base64') + encrypt.final('base64');
+    const encryptResult = encrypt.update(password, 'utf8', 'base64') + encrypt.final(
+        'base64'
+    );
     console.log(encryptResult);
     return encryptResult;
 }
 
 const decipher = (value, key) => {
-	const decode = crypto.createDecipher('des', key);
-	const decodeResult = decode.update(password, 'base64', 'utf8')
-		+ decode.final('utf8')
-	console.log(decodeResult)
+    const decode = crypto.createDecipher('des', key);
+    const decodeResult = decode.update(password, 'base64', 'utf8') + decode.final(
+        'utf8'
+    )
+    console.log(decodeResult)
     return decodeResult;
 }
-
 
 //process start
 module.exports = (server) => {
     console.log("check");
-    const io = socketIO(server, {cors: {origin:"*"}});
+    const io = socketIO(server, {
+        cors: {
+            origin: "*"
+        }
+    });
 
     // variable
     let packet = {
@@ -54,14 +59,16 @@ module.exports = (server) => {
 
         // check first word
         isStartWord(statement) {
-            if (statement.charAt(0) === this.startword)
-            return true;
+            if (statement.charAt(0) === this.startword) 
+                return true;
             else {
-                    console.log("False isStartWord(), state.chatAt(0) === "+statement.charAt(0)+"startword === "+this.startword);
-                    return false;
-                }
+                console.log(
+                    "False isStartWord(), state.chatAt(0) === " + statement.charAt(0) + "startword " +
+                    "=== " + this.startword
+                );
+                return false;
             }
-        ,
+        },
 
         // check user & msg
         isCheck(state, username) {
@@ -76,22 +83,22 @@ module.exports = (server) => {
     // socket
     io.on('connection', function (socket) {
 
-        //test
-        let d = new Date();
-        io.emit('FromAPI',d);
-
         // event : login (== access) (input data : name / userid)
         socket.on('login', function (data) {
             console.log(
-                'Client logged-in:\n name:' + data.name + '\n userid: ' + data.userid
+                'Client logged-in:\n name:' + data.name + '\n userid:' + data.userid
             );
             //
             // socket info
             socket.name = data.name;
             socket.userid = data.userid;
-            //
+
+            // config packet
+            packet.from.name = data.name;
+            packet.msg = data.name + " has joined";
+
             // send
-            io.emit('login', data.name);
+            io.emit('login', packet);
 
             //config gameInfo
             gameInfo
@@ -135,13 +142,11 @@ module.exports = (server) => {
             } else {
                 gameInfo.res = false;
                 if (gameInfo.isOrder(socket.name)) {
-                    gameInfo.res_message = "startword is wrong!" + gameInfo.startword;
+                    gameInfo.res_message = "startword is wrong! startword is " + gameInfo.startword;
                 } else {
                     gameInfo.res_message = "you are not in order yet!";
                 }
             }
-
-            gameInfo.res_message += "order: "+gameInfo.participants;
 
             // config packet
             packet.from.name = socket.name;
