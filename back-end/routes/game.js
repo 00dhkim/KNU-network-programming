@@ -2,11 +2,12 @@ const socketIO = require('socket.io');
 const crypto = require('crypto');
 
 const securekey = "key";
+let dres = "";
 
 //function
 const cipher = (value, key) => {
     const encrypt = crypto.createCipher('des', key);
-    const encryptResult = encrypt.update(password, 'utf8', 'base64') + encrypt.final(
+    const encryptResult = encrypt.update(value, 'utf8', 'base64') + encrypt.final(
         'base64'
     );
     console.log(encryptResult);
@@ -15,7 +16,7 @@ const cipher = (value, key) => {
 
 const decipher = (value, key) => {
     const decode = crypto.createDecipher('des', key);
-    const decodeResult = decode.update(password, 'base64', 'utf8') + decode.final(
+    const decodeResult = decode.update(value, 'base64', 'utf8') + decode.final(
         'utf8'
     )
     console.log(decodeResult)
@@ -48,6 +49,14 @@ module.exports = (server) => {
         res: true,
         res_message: "",
 
+        // obj clear
+        clear() {
+            this.order = 0;
+            this.participants = [];
+            this.startword = 'a';
+            this.res = true;
+            this.res_message = "";
+        },
         // check order
         isOrder(username) {
             if (username === this.participants[this.order]) 
@@ -93,17 +102,19 @@ module.exports = (server) => {
             socket.name = data.name;
             socket.userid = data.userid;
 
-            // config packet
-            packet.from.name = data.name;
-            packet.msg = data.name + " has joined";
-
-            // send
-            io.emit('login', packet);
-
             //config gameInfo
             gameInfo
                 .participants
                 .push(data.name);
+
+            // config packet
+            packet.from.name = data.name;
+            packet.msg = data.name + " has joined";
+            packet.order = gameInfo.participants[gameInfo.order];
+
+            // send
+            io.emit('login', packet);
+
         });
 
         // event : chat (input data : name / msg)
@@ -131,6 +142,9 @@ module.exports = (server) => {
 
         // event : game
         socket.on('game', (data) => {
+            console.log(data);
+            dres = decipher(data, securekey);
+            data = JSON.parse(dres);
 
             if (gameInfo.isCheck(data.msg, socket.name)) {
                 gameInfo.order = (gameInfo.order + 1) % gameInfo.participants.length;
@@ -152,16 +166,18 @@ module.exports = (server) => {
             packet.from.name = socket.name;
             packet.from.userid = socket.userid;
             packet.msg = data.msg;
+            packet.startword = gameInfo.startword;
+            packet.order = gameInfo.participants[gameInfo.order];
 
-            // send
+            // send 
             if (gameInfo.res) {
                 packet.res = true;
                 packet.comment = gameInfo.res_message;
-                io.emit('game', packet);
+                io.emit('game', cipher(JSON.stringify(packet), securekey));
             } else {
                 packet.res = false;
                 packet.comment = gameInfo.res_message;
-                socket.emit('game', packet);
+                socket.emit('game', cipher(JSON.stringify(packet), securekey));
             }
 
             console.dir(packet);
@@ -169,6 +185,9 @@ module.exports = (server) => {
 
         // event : disconnected force client disconnect from server
         socket.on('forceDisconnect', function () {
+
+            // clear gameinfo
+            gameInfo.clear();
 
             // config packet
             packet.from.name = socket.name;
@@ -182,6 +201,8 @@ module.exports = (server) => {
         });
         socket.on('disconnect', function () {
 
+            // clear gameinfo
+            gameInfo.clear();
             // config packet
             packet.from.name = socket.name;
             packet.from.userid = socket.userid;
