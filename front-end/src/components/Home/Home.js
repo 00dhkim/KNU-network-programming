@@ -1,6 +1,6 @@
-import React,{ isValidElement, useEffect } from 'react';
+import React,{ isValidElement, useEffect ,useRef} from 'react';
 import { withRouter } from 'react-router-dom';
-import { ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
+import { ACCESS_TOKEN_NAME, API_BASE_URL } from '../../constants/apiConstants';
 import axios from 'axios'
 import {useState} from 'react';
 import Cookies from 'universal-cookie';
@@ -10,16 +10,36 @@ function Home(props) {
     flag : "",
     name : ""
   }
-    const [title, updateTitle] = useState(null);
-    const sendToServer = () => { 
+  function useInterval(callback, delay) {
+      const savedCallback = useRef();
+  
+    // Remember the latest callback.
+      useEffect(() => {
+        savedCallback.current = callback;
+        }, [callback]);
+  
+    // Set up the interval.
+       useEffect(() => {
+        function tick() {
+          savedCallback.current();
+        }
+        if (delay !== null) {
+          let id = setInterval(tick, delay);
+          return () => clearInterval(id);
+        }
+      }, [delay]);
+    }
+
+    const sendToServer =()=>{ 
       axios.post('http://localhost:5000/wait',payload) 
       .then(function(response){
-        console.dir(response)
+        //console.dir(response)
         payload.flag = "wait"
         if(response.data.isStart ==true){
-          console.log("letgo")
-          clearTimeout(sendToServer)
-          redirectToGame();
+         // console.log("letgo")
+         redirectToGame();
+          return() => clearInterval(sendToServer)
+          
         }
       })
       .catch(function(error){
@@ -33,14 +53,12 @@ function Home(props) {
             if(response.status == 200) {
               props.updateTitle('Home')
               console.log("프라이빗 처리 성공")
-              console.log(response)
               payload.flag = "access"
               const msg = document.cookie;
               const name = msg.split(";");
               console.log(name)
               payload.name = name[0].substring(5)
-              console.log(payload.name)
-              sendToServer()
+              sendToServer();
             }
             else {
               console.log(response.data.result)
@@ -52,8 +70,10 @@ function Home(props) {
           .catch(function (error) {
             redirectToLogin()
           });
-          
-        })
+        },[])
+        // useInterval(()=>{
+        //   sendToServer();
+        // },10000)
   setInterval(sendToServer,10000);    
     function redirectToLogin() {
       props.updateTitle('Login')
@@ -63,6 +83,10 @@ function Home(props) {
       props.updateTitle('GAME');
       props.history.push('/game'); 
   }
+  function redirectToHome () {
+    props.updateTitle('Home');
+    props.history.push('/home'); 
+}
     return(
         <div className="mt-2">
           <span>waiting... </span>

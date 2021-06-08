@@ -24,8 +24,8 @@ let complete = {
 router
     .route('/')
     .post((req, res) => {
-        console.log(req.body);
-        console.dir(json);
+         //console.log(req.body);
+         //console.dir(json);
         flag = req.body.flag;
 
         json.isStart = false;
