@@ -15,6 +15,7 @@ var pool = mySql.createPool({
     user:'root',
     password: 'network123!',   //MySql 설치할때의 비번을 입력하면 됨!!
     database: 'NODE_DB',
+    port: 13306,
     debug: false
 });
 
