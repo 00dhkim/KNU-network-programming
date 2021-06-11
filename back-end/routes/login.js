@@ -13,6 +13,7 @@ var pool = mySql.createPool({
     connectionLimit: 10,            //접속을 10개 만들고 10개를 재사용
     host: '155.230.52.58',
     user:'root',
+    port: 13306,
     password: 'network123!',   //MySql 설치할때의 비번을 입력하면 됨!!
     database: 'NODE_DB',
     debug: false
